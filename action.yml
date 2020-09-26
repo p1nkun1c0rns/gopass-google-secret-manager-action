@@ -1,0 +1,39 @@
+---
+name: 'gopass to Google Secret Manager'
+description: 'Synchronizes a gopass repository to Google Clouds Secret Manager'
+branding:
+  icon: 'upload-cloud'
+  color: 'orange'
+inputs:
+  project_id:
+    description: 'GCP project ID'
+    required: true
+  service_account_key:
+    description: 'Base64 encoded JSON key for GCP service account'
+    required: true
+  secret_locations:
+    description: 'GCP region(s) as comma separated list to replicate the secrets'
+    required: true
+  gpg_public_key:
+    description: 'Base64 encoded public part of the GPG key'
+    required: true
+  gpg_private_key:
+    description: 'Base64 encoded private part of the GPG key'
+    required: true
+  github_token:
+    description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
+    required: true
+  gopass_repository:
+    description: 'gopass repository to synchronize from'
+    default: ''
+    required: false
+  debug:
+    description: 'Whether the gcloud commands should be printed to output'
+    required: false
+    default: 'false'
+outputs:
+  log:
+    description: 'Output about created or updated secrets'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
