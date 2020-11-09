@@ -1,4 +1,4 @@
-FROM google/cloud-sdk:316.0.0-slim
+FROM google/cloud-sdk:317.0.0-slim
 
 COPY entrypoint.sh /entrypoint.sh
 RUN apt-get install -y gnupg2 git rng-tools && \
