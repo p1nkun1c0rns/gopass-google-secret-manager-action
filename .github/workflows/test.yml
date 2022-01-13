@@ -1,5 +1,6 @@
+---
 name: "Test"
-on:
+"on":
   push:
     branches-ignore:
       - 'dependabot/*'
@@ -9,20 +10,6 @@ env:
   IMAGE: ${{ github.repository }}
 
 jobs:
-  lint:
-    runs-on: 'ubuntu-latest'
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Markdown Lint
-        uses: actionshub/markdownlint@2.0.2
-
-      - name: YAML Lint
-        uses: karancode/yamllint-github-action@master
-        with:
-          yamllint_config_filepath: .yamllint.yaml
-          yamllint_file_or_dir: action.yml
-
   test:
     runs-on: ubuntu-latest
     steps:
