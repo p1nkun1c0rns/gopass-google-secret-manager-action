@@ -12,22 +12,6 @@ HADOLINT_VERSION="v1.17.6-9-g550ee0d-alpine"
 
 # functions ###################################################################
 
-function setup() {
-  unset INPUT_DEBUG
-  unset INPUT_SERVICE_ACCOUNT_KEY
-  unset INPUT_PROJECT_ID
-  unset INPUT_IMAGE_NAME
-  unset INPUT_IMAGE_TAG
-  unset INPUT_GCP_REGION
-  unset INPUT_SERVICE_NAME
-  unset INPUT_ALLOW_UNAUTHENTICATED
-  unset INPUT_CONCURRENCY_PER_INSTANCE
-  unset INPUT_CPU
-  unset INPUT_MEMORY
-  unset INPUT_MAX_INSTANCES
-  unset INPUT_REQUEST_TIMEOUT
-}
-
 function debug() {
   status="$1"
   output="$2"
@@ -44,24 +28,25 @@ function debug() {
 ## general cases ##############################################################
 ###############################################################################
 
-@test "just start" {
-  run docker run --rm \
-  -v "$(pwd)/tests/data:/mnt/" \
-  -i $IMAGE
-
+@test "markdown linting" {
+  docker run --rm -i -v pwd:/workspace wpengine/mdl /workspace
   debug "${status}" "${output}" "${lines}"
-
-  echo $output | grep -q "Could not read json file key.json"
-  [[ "${status}" -eq 1 ]]
+  [[ "${status}" -eq 0 ]]
 }
 
-@test "start hadolint" {
+@test "yaml linting" {
+  docker run --rm -i -v pwd:/data cytopia/yamllint .
+  debug "${status}" "${output}" "${lines}"
+  [[ "${status}" -eq 0 ]]
+}
+
+@test "dockerfile linting" {
   docker run --rm -i hadolint/hadolint:$HADOLINT_VERSION < Dockerfile
   debug "${status}" "${output}" "${lines}"
   [[ "${status}" -eq 0 ]]
 }
 
-@test "start container-structure-test" {
+@test "container-structure-test" {
 
   # init
   mkdir -p $HOME/bin

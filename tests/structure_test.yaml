@@ -8,13 +8,6 @@ fileExistenceTests:
     uid: 0
     gid: 0
 
-  - name: '/google-cloud-sdk/bin/gcloud exist ...'
-    path: /google-cloud-sdk/bin/gcloud
-    isExecutableBy: 'owner'
-    shouldExist: true
-    uid: 0
-    gid: 0
-
 commandTests:
 - name: 'gcloud'
   command: 'gcloud'
