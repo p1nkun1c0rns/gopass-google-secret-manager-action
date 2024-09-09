@@ -1,4 +1,4 @@
-FROM google/cloud-sdk:490.0.0-slim
+FROM google/cloud-sdk:491.0.0-slim
 
 COPY entrypoint.sh /entrypoint.sh
 
